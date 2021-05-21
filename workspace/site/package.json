@@ -1,0 +1,18 @@
+{
+  "name": "site",
+  "version": "0.1.0",
+  "description": "The main repo for the actual website code",
+  "main": "index.js",
+  "scripts": {
+    "start": "gatsby develop",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "gatsby": "^3.5.1",
+    "gatsby-plugin-pnpm": "^1.2.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
