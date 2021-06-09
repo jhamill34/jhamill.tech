@@ -66,6 +66,7 @@ importers:
       '@types/react': ^17.0.6
       '@types/react-dom': ^17.0.5
       '@types/react-syntax-highlighter': ^13.5.0
+      copy-to-clipboard: ^3.3.1
       dateformat: ^4.5.1
       gatsby: ^3.5.1
       gatsby-plugin-image: ^1.6.0
@@ -85,6 +86,7 @@ importers:
     dependencies:
       '@mdx-js/mdx': 1.6.22
       '@mdx-js/react': 1.6.22_react@17.0.2
+      copy-to-clipboard: 3.3.1
       dateformat: 4.5.1
       gatsby: 3.5.1_60ae0a649738e16f4ad4cc47e82c849f
       gatsby-plugin-image: 1.6.0_de2e3c2a22a5307fa661a2bba15ad11b
@@ -5035,6 +5037,12 @@ packages:
   /copy-descriptor/0.1.1:
     resolution: {integrity: sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /copy-to-clipboard/3.3.1:
+    resolution: {integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==}
+    dependencies:
+      toggle-selection: 1.0.6
     dev: false
 
   /copyfiles/2.4.1:
@@ -13942,6 +13950,10 @@ packages:
       extend-shallow: 3.0.2
       regex-not: 1.0.2
       safe-regex: 1.1.0
+    dev: false
+
+  /toggle-selection/1.0.6:
+    resolution: {integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=}
     dev: false
 
   /toidentifier/1.0.0:

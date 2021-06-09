@@ -35,7 +35,8 @@ const theme: Theme & Variants = {
     background: '#fff',
     primary: '#07c',
     secondary: '#30c',
-    muted: '#f6f6f6',
+    muted: '#999',
+    dark: '#2d2d2d',
   },
   styles: {
     root: {
