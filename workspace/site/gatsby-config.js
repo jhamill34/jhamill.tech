@@ -12,10 +12,10 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-pnpm`,
-    `gatsby-plugin-theme-ui`,
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

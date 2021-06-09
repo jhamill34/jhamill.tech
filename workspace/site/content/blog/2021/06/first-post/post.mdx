@@ -1,9 +1,42 @@
 ---
 title: First Post
 date: June 6, 2021
+embeddedImagesLocal:
+  - key: atlas
+    image: atlas.jpeg
 ---
 
+import { getImage, GatsbyImage } from 'gatsby-plugin-image'
+
 # Hello
+
+```js
+function foo() {
+  return 1
+}
+```
+
+```css
+.clazz {
+  font-family: 'Helvetica';
+}
+```
+
+```html
+<h1>
+  Hello world
+</h1>
+```
+
+```java
+public class App {
+  public static void main(String[] args) {
+    System.out.println("Hello");
+  }
+}
+```
+
+<GatsbyImage image={getImage(props.localImages['atlas'])} />
 
 Non laboris pariatur sint in nisi irure ex anim qui Lorem sint aliqua. Nisi proident est ullamco non in labore nostrud. Ullamco exercitation ex fugiat occaecat excepteur est enim non. Pariatur irure irure sunt et culpa dolore eu. In commodo enim culpa incididunt enim velit. Dolor velit quis dolor sit eu. Dolore ea dolor ad consequat nisi duis deserunt mollit ea pariatur id exercitation qui eiusmod.
 

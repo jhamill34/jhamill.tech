@@ -96,17 +96,6 @@ const theme: Theme & Variants = {
     a: {
       color: 'primary',
     },
-    pre: {
-      fontFamily: 'monospace',
-      overflowX: 'auto',
-      code: {
-        color: 'inherit',
-      },
-    },
-    code: {
-      fontFamily: 'monospace',
-      fontSize: 'inherit',
-    },
     table: {
       width: '100%',
       borderCollapse: 'separate',

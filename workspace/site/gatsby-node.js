@@ -1,5 +1,31 @@
 /* eslint-disable */
 const path = require('path')
+const { createRemoteFileNode } = require('gatsby-source-filesystem')
+
+function onCreateNode({ node, createNodeId, actions: { createNode }, cache, store }) {
+  if (
+    node.internal.type === 'Mdx' &&
+    node.frontmatter &&
+    node.frontmatter.embeddedImagesRemote
+  ) {
+    return Promise.all(
+      node.frontmatter.embeddedImagesRemote.map(({ image }) => {
+        try {
+          return createRemoteFileNode({
+            url: image,
+            parentNodeId: node.id,
+            createNode,
+            createNodeId,
+            cache,
+            store
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      })
+    );
+  }
+};
 
 function extendSchema({ actions }) {
   const { createTypes } = actions
@@ -10,7 +36,19 @@ function extendSchema({ actions }) {
     type MdxFrontmatter {
       title: String
       date: String
-      draft: Boolean
+      publish: Boolean
+      embeddedImagesLocal: [LocalFileWithName]
+      embeddedImagesRemote: [RemoteFileWithName] 
+    }
+
+    type LocalFileWithName {
+      key: String
+      image: File @fileByRelativePath
+    }
+    
+    type RemoteFileWithName {
+      key: String
+      image: File @link(by: "url")
     }
   `
   createTypes(typeDefs)
@@ -29,7 +67,7 @@ async function createPages({ graphql, actions, reporter }) {
               frontmatter {
                 title
                 date
-                draft
+                publish
               }
             }
           }
@@ -46,7 +84,7 @@ async function createPages({ graphql, actions, reporter }) {
 
   posts.forEach(({ node }) => {
     const PATH_ROOT = 'blog'
-    let { frontmatter: { date, title, draft } } = node
+    let { frontmatter: { date, title, publish } } = node
 
     let datePath = createPathFromDate(date)
     if (datePath == 'Invalid Date') {
@@ -56,7 +94,7 @@ async function createPages({ graphql, actions, reporter }) {
 
     let slug = path.join(PATH_ROOT, datePath, titlePath)
 
-    if (process.env.NODE_ENV == "development" || !draft) {
+    if (process.env.NODE_ENV == "development" || publish) {
       createPage({
         path: slug,
         component: require.resolve(`./src/templates/postTemplate.tsx`),
@@ -88,5 +126,6 @@ function convertTitleToSlug(titleString) {
     })
 }
 
+exports.onCreateNode = onCreateNode
 exports.createPages = createPages
 exports.createSchemaCustomization = extendSchema

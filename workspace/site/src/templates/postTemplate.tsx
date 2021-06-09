@@ -6,9 +6,16 @@ import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { jsx } from 'theme-ui'
 import dateFormat from 'dateformat'
+import { ImageDataLike } from 'gatsby-plugin-image'
+import { CodeBlock } from '../components/CodeBlock'
 
 type TableOfContentsLink = Link & {
   items: [TableOfContentsLink]
+}
+
+type ImageWithKey = {
+  key: string
+  image: ImageDataLike
 }
 
 type PostTemplateProps = {
@@ -17,7 +24,9 @@ type PostTemplateProps = {
     frontmatter: {
       title: string
       date: string
-      draft: boolean
+      publish: boolean
+      embeddedImagesLocal: [ImageWithKey]
+      embeddedImagesRemote: [ImageWithKey]
     }
     tableOfContents: {
       items: [TableOfContentsLink]
@@ -54,11 +63,27 @@ function renderTableOfContents(item: TableOfContentsLink): React.ReactElement {
   )
 }
 
+const components = {
+  pre: (props: { children: React.ReactElement }): React.ReactElement =>
+    props.children,
+  code: CodeBlock,
+}
+
 export default function PostTemplate(
   props: Data<PostTemplateProps>
 ): React.ReactElement {
   const { frontmatter, body, timeToRead, tableOfContents } = props.data.mdx
   const datePosted = new Date(frontmatter.date)
+
+  const localImages: Record<string, ImageDataLike> = {}
+  frontmatter.embeddedImagesLocal?.forEach(
+    (e) => (localImages[e.key] = e.image)
+  )
+
+  const remoteImages: Record<string, ImageDataLike> = {}
+  frontmatter.embeddedImagesRemote?.forEach(
+    (e) => (remoteImages[e.key] = e.image)
+  )
 
   return (
     <div>
@@ -67,7 +92,7 @@ export default function PostTemplate(
           marginBottom: 3,
         }}
       >
-        {frontmatter.draft && (
+        {!frontmatter.publish && (
           <div
             sx={{
               fontWeight: 'heading',
@@ -99,8 +124,10 @@ export default function PostTemplate(
         {tableOfContents.items.map(renderTableOfContents)}
       </div>
 
-      <MDXProvider components={{}}>
-        <MDXRenderer>{body}</MDXRenderer>
+      <MDXProvider components={components}>
+        <MDXRenderer localImages={localImages} remoteImages={remoteImages}>
+          {body}
+        </MDXRenderer>
       </MDXProvider>
     </div>
   )
@@ -112,7 +139,23 @@ export const postQuery = graphql`
       frontmatter {
         title
         date
-        draft
+        publish
+        embeddedImagesLocal {
+          key
+          image {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
+        }
+        embeddedImagesRemote {
+          key
+          image {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
+        }
       }
       tableOfContents
       timeToRead

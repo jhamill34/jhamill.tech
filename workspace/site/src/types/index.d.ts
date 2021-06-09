@@ -1,3 +1,5 @@
+declare module 'prismjs/components/*'
+
 type Data<T> = {
   data: T
 }
