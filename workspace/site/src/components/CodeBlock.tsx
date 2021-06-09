@@ -34,6 +34,7 @@ export function CodeBlock({
     <div
       sx={{
         marginBottom: 3,
+        marginTop: 3,
         borderRadius: 8,
         overflow: 'hidden',
         backgroundColor: 'dark',

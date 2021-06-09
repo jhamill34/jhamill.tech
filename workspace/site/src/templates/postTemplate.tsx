@@ -8,6 +8,7 @@ import { jsx } from 'theme-ui'
 import dateFormat from 'dateformat'
 import { ImageDataLike } from 'gatsby-plugin-image'
 import { CodeBlock } from '../components/CodeBlock'
+import { Image } from '../components/Image'
 
 type TableOfContentsLink = Link & {
   items: [TableOfContentsLink]
@@ -67,6 +68,7 @@ const components = {
   pre: (props: { children: React.ReactElement }): React.ReactElement =>
     props.children,
   code: CodeBlock,
+  Image,
 }
 
 export default function PostTemplate(
@@ -144,7 +146,7 @@ export const postQuery = graphql`
           key
           image {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
             }
           }
         }
@@ -152,7 +154,7 @@ export const postQuery = graphql`
           key
           image {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
             }
           }
         }
