@@ -21,8 +21,7 @@ export function Image(props: ImageProps): React.ReactElement {
       alt={props.alt}
       image={image}
       sx={{
-        margin: 'auto',
-        boxShadow: '0 4px 5px rgba(0, 0, 0, 0.3)',
+        variant: 'styles.img',
       }}
     />
   )

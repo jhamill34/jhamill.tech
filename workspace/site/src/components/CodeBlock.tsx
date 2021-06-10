@@ -33,22 +33,13 @@ export function CodeBlock({
   return (
     <div
       sx={{
-        marginBottom: 3,
-        marginTop: 3,
-        borderRadius: 8,
-        overflow: 'hidden',
-        backgroundColor: 'dark',
+        variant: 'code.root',
         position: 'relative',
-        boxShadow: '0 4px 5px rgba(0, 0, 0, 0.3)',
       }}
     >
       <div
         sx={{
-          fontSize: 1,
-          p: 2,
-          textAlign: 'center',
-          color: 'muted',
-          fontFamily: 'monospace',
+          variant: 'code.title',
         }}
       >
         {title ? `${title}.${language}` : `${language}`}
@@ -60,19 +51,10 @@ export function CodeBlock({
         }}
         sx={{
           position: 'absolute',
-          color: 'muted',
-          cursor: 'pointer',
           border: 0,
           right: 3,
           bottom: 3,
-          borderRadius: 4,
-          fontSize: 1,
-          p: 2,
-          m: 0,
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          fontFamily: 'body',
-          fontWeight: 'body',
-          lineHeight: 'body',
+          variant: 'code.button',
         }}
       >
         {copied ? `Copied!` : `Copy`}

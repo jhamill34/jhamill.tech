@@ -9,33 +9,30 @@ type TableOfContentsProps = {
 }
 
 function makeTableOfContents(
-  items: [TableOfContentsLink]
+  items: [TableOfContentsLink],
+  previousTag = ''
 ): React.ReactElement[] {
-  return items.map((item) => (
-    <div
-      key={item.title}
-      sx={{
-        marginLeft: 3,
-      }}
-    >
-      <GatsbyLink
-        sx={{
-          color: 'text',
-          textDecoration: 'none',
-          borderBottom: '2px solid transparent',
-          transition: 'all 0.2s ease-in-out',
-          ':hover, :focus': {
-            color: 'primary',
-            borderBottomColor: 'primary',
-          },
-        }}
-        to={item.url}
-      >
-        {item.title}
-      </GatsbyLink>
-      {item.items && makeTableOfContents(item.items)}
-    </div>
-  ))
+  return items.map((item, ndx) => {
+    const tag = `${previousTag}${ndx + 1}`
+
+    return (
+      <li key={item.title} sx={{ paddingTop: 2 }}>
+        <GatsbyLink
+          sx={{
+            variant: 'post.toc.link',
+          }}
+          to={item.url}
+        >
+          {tag} {item.title}
+        </GatsbyLink>
+        {item.items && (
+          <ul sx={{ paddingLeft: 3, listStyleType: 'none' }}>
+            {makeTableOfContents(item.items, tag + '.')}
+          </ul>
+        )}
+      </li>
+    )
+  })
 }
 
 export function TableOfContents({
@@ -45,14 +42,14 @@ export function TableOfContents({
     <div>
       <div
         sx={{
-          fontWeight: 'heading',
-          fontFamily: 'heading',
-          fontSize: 2,
+          variant: 'post.toc.heading',
         }}
       >
         Table Of Contents
       </div>
-      {makeTableOfContents(items)}
+      <ul sx={{ paddingLeft: 3, listStyleType: 'none' }}>
+        {makeTableOfContents(items)}
+      </ul>
     </div>
   )
 }

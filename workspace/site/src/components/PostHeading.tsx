@@ -25,7 +25,7 @@ export function PostHeading(props: PostHeadingProps): React.ReactElement {
         <div
           sx={{
             fontWeight: 'heading',
-            color: 'primary',
+            color: 'warning',
           }}
         >
           [DRAFT]

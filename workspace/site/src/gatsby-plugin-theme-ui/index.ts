@@ -4,12 +4,21 @@ type Variants = {
   post: {
     title: ThemeUIStyleObject
     metadata: ThemeUIStyleObject
+    toc: {
+      heading: ThemeUIStyleObject
+      link: ThemeUIStyleObject
+    }
   }
   nav: {
     left: ThemeUIStyleObject
     right: ThemeUIStyleObject
     root: ThemeUIStyleObject
     link: ThemeUIStyleObject
+  }
+  code: {
+    root: ThemeUIStyleObject
+    button: ThemeUIStyleObject
+    title: ThemeUIStyleObject
   }
 }
 
@@ -37,6 +46,7 @@ const theme: Theme & Variants = {
     secondary: '#30c',
     muted: '#999',
     dark: '#2d2d2d',
+    warning: '#f00',
   },
   styles: {
     root: {
@@ -96,6 +106,14 @@ const theme: Theme & Variants = {
     },
     a: {
       color: 'primary',
+      borderBottomWidth: '2px',
+      borderBottomColor: 'transparent',
+      borderBottomStyle: 'solid',
+      textDecoration: 'none',
+      transition: 'all 0.2s ease-in-out',
+      ':hover, :focus': {
+        borderBottomColor: 'primary',
+      },
     },
     table: {
       width: '100%',
@@ -111,17 +129,28 @@ const theme: Theme & Variants = {
       borderBottomStyle: 'solid',
     },
     img: {
-      maxWidth: '100%',
+      margin: 'auto',
+      boxShadow: '0 4px 5px rgba(0, 0, 0, 0.3)',
     },
   },
   post: {
     title: {
       fontSize: 6,
       fontWeight: 'heading',
+      fontFamily: 'heading',
+      lineHeight: 'heading',
     },
     metadata: {
       fontSize: 1,
       fontStyle: 'italic',
+    },
+    toc: {
+      link: {
+        variant: 'styles.a',
+      },
+      heading: {
+        variant: 'styles.h4',
+      },
     },
   },
   nav: {
@@ -134,11 +163,36 @@ const theme: Theme & Variants = {
     },
     right: {},
     link: {
-      color: 'text',
-      transition: 'color 0.3s ease-in-out',
-      ':hover,:focus': {
-        color: 'primary',
-      },
+      padding: 3,
+      fontSize: 3,
+      variant: 'styles.a',
+    },
+  },
+  code: {
+    root: {
+      marginBottom: 3,
+      marginTop: 3,
+      borderRadius: 8,
+      overflow: 'hidden',
+      backgroundColor: 'dark',
+      boxShadow: '0 4px 5px rgba(0, 0, 0, 0.3)',
+    },
+    button: {
+      color: 'muted',
+      cursor: 'pointer',
+      borderRadius: 4,
+      fontSize: 1,
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      fontFamily: 'body',
+      fontWeight: 'body',
+      lineHeight: 'body',
+      p: 2,
+    },
+    title: {
+      fontSize: 1,
+      p: 2,
+      textAlign: 'center',
+      color: 'muted',
     },
   },
 }

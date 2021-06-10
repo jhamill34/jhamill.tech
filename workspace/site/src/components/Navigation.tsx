@@ -28,9 +28,6 @@ export function Navigation(props: NavigationProps): React.ReactElement {
         <GatsbyLink
           sx={{
             display: 'block',
-            padding: 3,
-            textDecoration: 'none',
-            fontSize: 3,
             variant: 'nav.link',
           }}
           to="/"
@@ -52,9 +49,6 @@ export function Navigation(props: NavigationProps): React.ReactElement {
             <GatsbyLink
               sx={{
                 display: 'block',
-                padding: 3,
-                textDecoration: 'none',
-                fontSize: 3,
                 variant: 'nav.link',
               }}
               to={l.url}
