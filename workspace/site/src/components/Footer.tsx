@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Themed } from 'theme-ui'
+import { jsx } from 'theme-ui'
 import { graphql } from 'gatsby'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
@@ -14,16 +14,17 @@ function FooterItem(props: {
   children: React.ReactNode
 }): React.ReactElement {
   return (
-    <Themed.a
+    <a
       href={props.to}
       sx={{
+        variant: 'links.navigation',
         lineHeight: '1em',
         display: 'block',
         m: 3,
       }}
     >
       {props.children}
-    </Themed.a>
+    </a>
   )
 }
 

@@ -6,8 +6,8 @@ module.exports = {
     author: `Josh Hamill`,
     navigationLinks: [
       { title: 'Blog', url: '/blog' },
-      // { title: 'Portfolio', url: '/portfolio' },
-      // { title: 'Contact', url: '/contact' },
+      { title: 'Portfolio', url: '/portfolio' },
+      { title: 'Contact', url: '/contact' },
     ],
     socialLinks: {
       github: 'https://github.com/jhamill34',

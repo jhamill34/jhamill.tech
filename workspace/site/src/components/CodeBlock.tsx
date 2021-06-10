@@ -54,6 +54,7 @@ export function CodeBlock({
           border: 0,
           right: 3,
           bottom: 3,
+          outline: 'none',
           variant: 'code.button',
         }}
       >

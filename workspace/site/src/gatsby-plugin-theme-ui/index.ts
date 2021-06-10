@@ -1,6 +1,11 @@
 import { Theme, ThemeUIStyleObject } from 'theme-ui'
 
 type Variants = {
+  links: {
+    base: ThemeUIStyleObject
+    navigation: ThemeUIStyleObject
+    inline: ThemeUIStyleObject
+  }
   post: {
     title: ThemeUIStyleObject
     metadata: ThemeUIStyleObject
@@ -23,8 +28,32 @@ type Variants = {
   }
 }
 
+const headingEffect: ThemeUIStyleObject = {
+  position: 'relative',
+  display: 'inline-block',
+  '::before': {
+    content: "''",
+    width: '20%',
+    height: '0.1em',
+    backgroundColor: 'primary',
+    display: 'block',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    zIndex: -1,
+    transition: 'transform 0.3s ease-in-out',
+    transformOrigin: 'bottom left',
+  },
+  ':hover': {
+    '::before': {
+      transform: 'scaleY(2) scaleX(5)',
+    },
+  },
+}
+
 const theme: Theme & Variants = {
   breakpoints: ['600px', '980px'],
+  initialColorModeName: 'light',
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: '"Roboto", sans-serif',
@@ -42,13 +71,21 @@ const theme: Theme & Variants = {
     heading: 1.125,
   },
   colors: {
-    text: '#505050',
-    background: '#fff',
-    primary: '#07c',
-    secondary: '#30c',
+    text: '#1d1d1d',
+    background: '#eee',
+    primary: '#5e35b1',
+    secondary: '#4527a0',
     muted: '#999',
     dark: '#2d2d2d',
     warning: '#f00',
+    modes: {
+      dark: {
+        text: '#eee',
+        background: '#1d1d1d',
+        primary: '#9575cd',
+        secondary: '#673ab7',
+      },
+    },
   },
   styles: {
     root: {
@@ -64,6 +101,7 @@ const theme: Theme & Variants = {
       lineHeight: 'heading',
       fontWeight: 'heading',
       fontSize: 5,
+      ...headingEffect,
     },
     h2: {
       color: 'text',
@@ -71,6 +109,7 @@ const theme: Theme & Variants = {
       lineHeight: 'heading',
       fontWeight: 'heading',
       fontSize: 4,
+      ...headingEffect,
     },
     h3: {
       color: 'text',
@@ -107,15 +146,7 @@ const theme: Theme & Variants = {
       lineHeight: 'body',
     },
     a: {
-      color: 'primary',
-      borderBottomWidth: '2px',
-      borderBottomColor: 'transparent',
-      borderBottomStyle: 'solid',
-      textDecoration: 'none',
-      transition: 'all 0.2s ease-in-out',
-      ':hover, :focus': {
-        borderBottomColor: 'primary',
-      },
+      variant: 'links.inline',
     },
     table: {
       width: '100%',
@@ -146,6 +177,7 @@ const theme: Theme & Variants = {
     metadata: {
       fontSize: 1,
       fontStyle: 'italic',
+      color: 'muted',
     },
     toc: {
       root: {
@@ -153,7 +185,7 @@ const theme: Theme & Variants = {
         top: 3,
       },
       link: {
-        variant: 'styles.a',
+        variant: 'links.navigation',
       },
       heading: {
         variant: 'styles.h3',
@@ -170,9 +202,9 @@ const theme: Theme & Variants = {
     },
     right: {},
     link: {
-      padding: 3,
+      py: 3,
       fontSize: 3,
-      variant: 'styles.a',
+      variant: 'links.navigation',
     },
   },
   code: {
@@ -183,6 +215,10 @@ const theme: Theme & Variants = {
       overflow: 'hidden',
       backgroundColor: 'dark',
       boxShadow: '0 4px 5px rgba(0, 0, 0, 0.3)',
+      transition: 'all 0.2s ease-in-out',
+      ':hover': {
+        boxShadow: '0 6px 10px rgba(0, 0, 0, 0.2)',
+      },
     },
     button: {
       color: 'muted',
@@ -193,13 +229,67 @@ const theme: Theme & Variants = {
       fontFamily: 'body',
       fontWeight: 'body',
       lineHeight: 'body',
-      p: 2,
+      borderBottomWidth: '4px',
+      borderBottomStyle: 'solid',
+      borderBottomColor: 'transparent',
+      transition: 'all 0.3s ease-in-out',
+      px: 2,
+      paddingTop: 2,
+      ':hover, :focus': {
+        borderBottomColor: 'primary',
+      },
     },
     title: {
       fontSize: 1,
       p: 2,
       textAlign: 'center',
       color: 'muted',
+    },
+  },
+  links: {
+    base: {
+      color: 'primary',
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      cursor: 'pointer',
+    },
+    inline: {
+      variant: 'links.base',
+      borderBottomWidth: '4px',
+      borderBottomStyle: 'solid',
+      borderBottomColor: 'transparent',
+      transition: 'border-bottom-color 0.1s ease-in-out',
+      ':hover,:focus': {
+        borderBottomColor: 'primary',
+      },
+    },
+    navigation: {
+      variant: 'links.base',
+      display: 'inline-block',
+      '::before': {
+        fontFamily: 'monospace',
+        content: "'{'",
+        marginRight: 1,
+        display: 'inline-block',
+        opacity: 0,
+        transform: 'translateX(20px)',
+        transition: 'all 0.2s ease-in-out',
+      },
+      '::after': {
+        fontFamily: 'monospace',
+        content: "'}'",
+        marginLeft: 1,
+        display: 'inline-block',
+        opacity: 0,
+        transform: 'translateX(-20px)',
+        transition: 'all 0.2s ease-in-out',
+      },
+      ':hover,:focus': {
+        '::before, ::after': {
+          opacity: 1,
+          transform: 'translateX(0)',
+        },
+      },
     },
   },
 }

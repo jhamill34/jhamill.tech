@@ -1,8 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { Link as GatsbyLink, graphql } from 'gatsby'
-import { jsx } from 'theme-ui'
+import { jsx, useColorMode } from 'theme-ui'
 import React from 'react'
+import { FiSun, FiMoon } from 'react-icons/fi'
 
 type NavigationProps = {
   title: string
@@ -10,6 +11,8 @@ type NavigationProps = {
 }
 
 export function Navigation(props: NavigationProps): React.ReactElement {
+  const [colorMode, setColorMode] = useColorMode()
+
   return (
     <nav
       sx={{
@@ -35,29 +38,52 @@ export function Navigation(props: NavigationProps): React.ReactElement {
           {props.title}
         </GatsbyLink>
       </div>
-      <ul
+      <div
         sx={{
           display: 'flex',
-          listStyleType: 'none',
-          margin: 0,
-          padding: 0,
-          variant: 'nav.right',
+          alignItems: 'stretch',
+          mx: 3,
         }}
       >
-        {props.links.map((l) => (
-          <li key={l.title}>
-            <GatsbyLink
-              sx={{
-                display: 'block',
-                variant: 'nav.link',
-              }}
-              to={l.url}
-            >
-              {l.title}
-            </GatsbyLink>
-          </li>
-        ))}
-      </ul>
+        <ul
+          sx={{
+            display: 'flex',
+            listStyleType: 'none',
+            margin: 0,
+            padding: 0,
+            variant: 'nav.right',
+          }}
+        >
+          {props.links.map((l) => (
+            <li key={l.title}>
+              <GatsbyLink
+                sx={{
+                  display: 'block',
+                  variant: 'nav.link',
+                }}
+                to={l.url}
+              >
+                {l.title}
+              </GatsbyLink>
+            </li>
+          ))}
+        </ul>
+        <button
+          onClick={() => setColorMode((c) => (c == 'light' ? 'dark' : 'light'))}
+          sx={{
+            border: 0,
+            backgroundColor: 'transparent',
+            fontSize: 3,
+            p: 2,
+            m: 0,
+            boxSizing: 'border-box',
+            outline: 'none',
+            variant: 'links.navigation',
+          }}
+        >
+          {colorMode == 'light' ? <FiSun /> : <FiMoon />}
+        </button>
+      </div>
     </nav>
   )
 }
