@@ -9,6 +9,11 @@ module.exports = {
       // { title: 'Portfolio', url: '/portfolio' },
       // { title: 'Contact', url: '/contact' },
     ],
+    socialLinks: {
+      github: 'https://github.com/jhamill34',
+      linkedin: 'https://www.linkedin.com/in/jlrasmussen34/',
+      twitter: 'https://twitter.com/jhamill34',
+    },
   },
   plugins: [
     `gatsby-plugin-pnpm`,

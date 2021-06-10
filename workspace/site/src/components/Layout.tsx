@@ -4,6 +4,7 @@ import React from 'react'
 import { jsx } from 'theme-ui'
 import { useSiteMetadata } from '../hooks/useSiteMetadata'
 import { Navigation } from './Navigation'
+import { Footer } from './Footer'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -31,6 +32,7 @@ export function Layout(props: LayoutProps): React.ReactElement {
       >
         {props.children}
       </main>
+      <Footer links={siteMetadata.socialLinks} />
     </div>
   )
 }

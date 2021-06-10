@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { Link as GatsbyLink } from 'gatsby'
+import { Link as GatsbyLink, graphql } from 'gatsby'
 import { jsx } from 'theme-ui'
 import React from 'react'
 
@@ -61,3 +61,15 @@ export function Navigation(props: NavigationProps): React.ReactElement {
     </nav>
   )
 }
+
+export const fragment = graphql`
+  fragment NavigationData on Site {
+    siteMetadata {
+      shortTitle
+      navigationLinks {
+        title
+        url
+      }
+    }
+  }
+`

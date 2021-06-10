@@ -5,6 +5,7 @@ type Variants = {
     title: ThemeUIStyleObject
     metadata: ThemeUIStyleObject
     toc: {
+      root: ThemeUIStyleObject
       heading: ThemeUIStyleObject
       link: ThemeUIStyleObject
     }
@@ -145,17 +146,18 @@ const theme: Theme & Variants = {
       fontStyle: 'italic',
     },
     toc: {
+      root: {},
       link: {
         variant: 'styles.a',
       },
       heading: {
-        variant: 'styles.h4',
+        variant: 'styles.h3',
       },
     },
   },
   nav: {
     root: {
-      boxShadow: '0 1px 1px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
     },
     left: {
       fontWeight: 'heading',

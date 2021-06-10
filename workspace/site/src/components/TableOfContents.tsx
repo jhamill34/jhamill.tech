@@ -16,7 +16,15 @@ function makeTableOfContents(
     const tag = `${previousTag}${ndx + 1}`
 
     return (
-      <li key={item.title} sx={{ paddingTop: 2 }}>
+      <li
+        key={item.title}
+        sx={{
+          paddingLeft: 3,
+          borderLeftWidth: 1,
+          borderLeftStyle: 'solid',
+          borderLeftColor: 'primary',
+        }}
+      >
         <GatsbyLink
           sx={{
             variant: 'post.toc.link',
@@ -26,7 +34,7 @@ function makeTableOfContents(
           {tag} {item.title}
         </GatsbyLink>
         {item.items && (
-          <ul sx={{ paddingLeft: 3, listStyleType: 'none' }}>
+          <ul sx={{ paddingLeft: 1, listStyleType: 'none' }}>
             {makeTableOfContents(item.items, tag + '.')}
           </ul>
         )}
@@ -39,7 +47,11 @@ export function TableOfContents({
   items,
 }: TableOfContentsProps): React.ReactElement {
   return (
-    <div>
+    <div
+      sx={{
+        variant: 'post.toc.root',
+      }}
+    >
       <div
         sx={{
           variant: 'post.toc.heading',

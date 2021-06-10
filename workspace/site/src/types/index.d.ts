@@ -4,6 +4,12 @@ type Data<T> = {
   data: T
 }
 
+type SocialLinks = {
+  github: string
+  linkedin: string
+  twitter: string
+}
+
 type Link = {
   title: string
   url: string
@@ -21,6 +27,7 @@ type SiteMetadata = {
   description: string
   author: string
   navigationLinks: [Link]
+  socialLinks: SocialLinks
 }
 
 type TableOfContentsLink = Link & {
