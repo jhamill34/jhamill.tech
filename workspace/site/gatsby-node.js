@@ -41,12 +41,17 @@ function extendSchema({ actions }) {
       embeddedImagesRemote: [RemoteFileWithName] 
     }
 
-    type LocalFileWithName {
+    interface FileWithName {
+      key: String
+      image: File 
+    }
+
+    type LocalFileWithName implements FileWithName {
       key: String
       image: File @fileByRelativePath
     }
     
-    type RemoteFileWithName {
+    type RemoteFileWithName implements FileWithName {
       key: String
       image: File @link(by: "url")
     }

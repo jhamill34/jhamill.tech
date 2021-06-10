@@ -1,23 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { graphql, Link as GatsbyLink } from 'gatsby'
 import React from 'react'
+import { jsx } from 'theme-ui'
+import { graphql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-import { jsx } from 'theme-ui'
-import dateFormat from 'dateformat'
 import { ImageDataLike } from 'gatsby-plugin-image'
-import { CodeBlock } from '../components/CodeBlock'
-import { Image } from '../components/Image'
-
-type TableOfContentsLink = Link & {
-  items: [TableOfContentsLink]
-}
-
-type ImageWithKey = {
-  key: string
-  image: ImageDataLike
-}
+import components from '../gatsby-plugin-theme-ui/components'
+import { TableOfContents } from '../components/TableOfContents'
+import { PostHeading } from '../components/PostHeading'
 
 type PostTemplateProps = {
   mdx: {
@@ -34,41 +25,6 @@ type PostTemplateProps = {
     }
     timeToRead: number
   }
-}
-
-function renderTableOfContents(item: TableOfContentsLink): React.ReactElement {
-  return (
-    <div
-      key={item.title}
-      sx={{
-        marginLeft: 3,
-      }}
-    >
-      <GatsbyLink
-        sx={{
-          color: 'text',
-          textDecoration: 'none',
-          borderBottom: '2px solid transparent',
-          transition: 'all 0.2s ease-in-out',
-          ':hover, :focus': {
-            color: 'primary',
-            borderBottomColor: 'primary',
-          },
-        }}
-        to={item.url}
-      >
-        {item.title}
-      </GatsbyLink>
-      {item.items && item.items.map(renderTableOfContents)}
-    </div>
-  )
-}
-
-const components = {
-  pre: (props: { children: React.ReactElement }): React.ReactElement =>
-    props.children,
-  code: CodeBlock,
-  Image,
 }
 
 export default function PostTemplate(
@@ -89,42 +45,13 @@ export default function PostTemplate(
 
   return (
     <div>
-      <div
-        sx={{
-          marginBottom: 3,
-        }}
-      >
-        {!frontmatter.publish && (
-          <div
-            sx={{
-              fontWeight: 'heading',
-              color: 'primary',
-            }}
-          >
-            [DRAFT]
-          </div>
-        )}
-        <div sx={{ variant: 'post.title' }}>{frontmatter.title}</div>
-        <div sx={{ variant: 'post.metadata' }}>
-          <div>
-            {dateFormat(datePosted, 'mmmm dS, yyyy')} &middot; {timeToRead} min
-            read
-          </div>
-        </div>
-      </div>
-
-      <div sx={{}}>
-        <div
-          sx={{
-            fontWeight: 'heading',
-            fontFamily: 'heading',
-            fontSize: 2,
-          }}
-        >
-          Table Of Contents
-        </div>
-        {tableOfContents.items.map(renderTableOfContents)}
-      </div>
+      <PostHeading
+        datePosted={datePosted}
+        published={frontmatter.publish}
+        timeToRead={timeToRead}
+        title={frontmatter.title}
+      />
+      <TableOfContents items={tableOfContents.items} />
 
       <MDXProvider components={components}>
         <MDXRenderer localImages={localImages} remoteImages={remoteImages}>
@@ -136,31 +63,31 @@ export default function PostTemplate(
 }
 
 export const postQuery = graphql`
+  fragment ImageWithName on FileWithName {
+    key
+    image {
+      childImageSharp {
+        gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
+      }
+    }
+  }
+
+  fragment EmbeddedImages on Mdx {
+    frontmatter {
+      embeddedImagesLocal {
+        ...ImageWithName
+      }
+      embeddedImagesRemote {
+        ...ImageWithName
+      }
+    }
+  }
+
   query PostTemplateQuery($id: String) {
     mdx(id: { eq: $id }) {
-      frontmatter {
-        title
-        date
-        publish
-        embeddedImagesLocal {
-          key
-          image {
-            childImageSharp {
-              gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
-            }
-          }
-        }
-        embeddedImagesRemote {
-          key
-          image {
-            childImageSharp {
-              gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
-            }
-          }
-        }
-      }
-      tableOfContents
-      timeToRead
+      ...EmbeddedImages
+      ...PostHeading
+      ...TableOfContents
       body
     }
   }

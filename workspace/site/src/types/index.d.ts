@@ -22,3 +22,12 @@ type SiteMetadata = {
   author: string
   navigationLinks: [Link]
 }
+
+type TableOfContentsLink = Link & {
+  items: [TableOfContentsLink]
+}
+
+type ImageWithKey = {
+  key: string
+  image: ImageDataLike
+}
