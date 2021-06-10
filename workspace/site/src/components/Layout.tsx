@@ -24,7 +24,7 @@ export function Layout(props: LayoutProps): React.ReactElement {
 
       <main
         sx={{
-          maxWidth: 900,
+          maxWidth: 1200,
           minHeight: '100vh',
           margin: '0 auto',
           padding: 3,

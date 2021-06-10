@@ -16,11 +16,7 @@ export function PostHeading(props: PostHeadingProps): React.ReactElement {
   const { title, published, timeToRead, datePosted } = props
 
   return (
-    <div
-      sx={{
-        marginBottom: 3,
-      }}
-    >
+    <div>
       {!published && (
         <div
           sx={{

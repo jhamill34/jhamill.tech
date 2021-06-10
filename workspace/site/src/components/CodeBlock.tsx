@@ -63,11 +63,14 @@ export function CodeBlock({
         customStyle={{
           margin: 0,
           backgroundColor: 'transparent',
+          fontSize: null,
         }}
         language={language}
         showLineNumbers
         style={style}
-        sx={{}}
+        sx={{
+          fontSize: [0, 1, 2],
+        }}
       >
         {children.trim()}
       </SyntaxHighlighter>

@@ -24,6 +24,7 @@ type Variants = {
 }
 
 const theme: Theme & Variants = {
+  breakpoints: ['600px', '980px'],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: '"Roboto", sans-serif',
@@ -131,6 +132,7 @@ const theme: Theme & Variants = {
     },
     img: {
       margin: 'auto',
+      maxWidth: '100%',
       boxShadow: '0 4px 5px rgba(0, 0, 0, 0.3)',
     },
   },
@@ -146,7 +148,10 @@ const theme: Theme & Variants = {
       fontStyle: 'italic',
     },
     toc: {
-      root: {},
+      root: {
+        position: [null, 'sticky'],
+        top: 3,
+      },
       link: {
         variant: 'styles.a',
       },

@@ -44,20 +44,37 @@ export default function PostTemplate(
   )
 
   return (
-    <div>
-      <PostHeading
-        datePosted={datePosted}
-        published={frontmatter.publish}
-        timeToRead={timeToRead}
-        title={frontmatter.title}
-      />
-      <TableOfContents items={tableOfContents.items} />
+    <div
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: ['1fr', '1fr', '1fr 60% 1fr'],
+        gridTemplateAreas: [
+          '"header" "toc" "body"',
+          '"header" "toc" "body"',
+          '". header ." "toc body body"',
+        ],
+      }}
+    >
+      <div sx={{ gridArea: 'header', minWidth: 0 }}>
+        <PostHeading
+          datePosted={datePosted}
+          published={frontmatter.publish}
+          timeToRead={timeToRead}
+          title={frontmatter.title}
+        />
+      </div>
 
-      <MDXProvider components={components}>
-        <MDXRenderer localImages={localImages} remoteImages={remoteImages}>
-          {body}
-        </MDXRenderer>
-      </MDXProvider>
+      <div sx={{ gridArea: 'toc', minWidth: 0 }}>
+        <TableOfContents items={tableOfContents.items} />
+      </div>
+
+      <div sx={{ gridArea: 'body', minWidth: 0 }}>
+        <MDXProvider components={components}>
+          <MDXRenderer localImages={localImages} remoteImages={remoteImages}>
+            {body}
+          </MDXRenderer>
+        </MDXProvider>
+      </div>
     </div>
   )
 }

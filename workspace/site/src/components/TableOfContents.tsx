@@ -20,7 +20,7 @@ function makeTableOfContents(
         key={item.title}
         sx={{
           paddingLeft: 3,
-          borderLeftWidth: 1,
+          borderLeftWidth: '2px',
           borderLeftStyle: 'solid',
           borderLeftColor: 'primary',
         }}
@@ -55,6 +55,7 @@ export function TableOfContents({
       <div
         sx={{
           variant: 'post.toc.heading',
+          marginTop: '1.5em',
         }}
       >
         Table Of Contents
