@@ -16,16 +16,20 @@ export function Navigation(props: NavigationProps): React.ReactElement {
   return (
     <nav
       sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
+        display: 'grid',
+        gridTemplateColumns: ['1fr auto', '1fr auto auto'],
+        gridTemplateAreas: [
+          '"home toggle" "links links"',
+          '"home links toggle"',
+        ],
+        px: 3,
         variant: 'nav.root',
       }}
     >
       <div
         sx={{
           variant: 'nav.left',
+          gridArea: 'home',
         }}
       >
         <GatsbyLink
@@ -38,52 +42,48 @@ export function Navigation(props: NavigationProps): React.ReactElement {
           {props.title}
         </GatsbyLink>
       </div>
-      <div
+      <ul
         sx={{
           display: 'flex',
-          alignItems: 'stretch',
-          mx: 3,
+          justifyContent: 'center',
+          listStyleType: 'none',
+          margin: 0,
+          padding: 0,
+          variant: 'nav.right',
+          gridArea: 'links',
         }}
       >
-        <ul
-          sx={{
-            display: 'flex',
-            listStyleType: 'none',
-            margin: 0,
-            padding: 0,
-            variant: 'nav.right',
-          }}
-        >
-          {props.links.map((l) => (
-            <li key={l.title}>
-              <GatsbyLink
-                sx={{
-                  display: 'block',
-                  variant: 'nav.link',
-                }}
-                to={l.url}
-              >
-                {l.title}
-              </GatsbyLink>
-            </li>
-          ))}
-        </ul>
-        <button
-          onClick={() => setColorMode((c) => (c == 'light' ? 'dark' : 'light'))}
-          sx={{
-            border: 0,
-            backgroundColor: 'transparent',
-            fontSize: 3,
-            p: 2,
-            m: 0,
-            boxSizing: 'border-box',
-            outline: 'none',
-            variant: 'links.navigation',
-          }}
-        >
-          {colorMode == 'light' ? <FiSun /> : <FiMoon />}
-        </button>
-      </div>
+        {props.links.map((l) => (
+          <li key={l.title}>
+            <GatsbyLink
+              sx={{
+                display: 'block',
+                variant: 'nav.link',
+              }}
+              to={l.url}
+            >
+              {l.title}
+            </GatsbyLink>
+          </li>
+        ))}
+      </ul>
+      <button
+        onClick={() => setColorMode((c) => (c == 'light' ? 'dark' : 'light'))}
+        sx={{
+          border: 0,
+          flexGrow: 0,
+          backgroundColor: 'transparent',
+          fontSize: 3,
+          p: 2,
+          m: 0,
+          boxSizing: 'border-box',
+          outline: 'none',
+          variant: 'links.navigation',
+          gridArea: 'toggle',
+        }}
+      >
+        {colorMode == 'light' ? <FiSun /> : <FiMoon />}
+      </button>
     </nav>
   )
 }

@@ -52,7 +52,7 @@ const headingEffect: ThemeUIStyleObject = {
 }
 
 const theme: Theme & Variants = {
-  breakpoints: ['600px', '980px'],
+  breakpoints: ['700px', '980px'],
   initialColorModeName: 'light',
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
@@ -199,11 +199,13 @@ const theme: Theme & Variants = {
     left: {
       fontWeight: 'heading',
       fontFamily: 'monospace',
+      fontSize: 4,
     },
-    right: {},
+    right: {
+      fontSize: 3,
+    },
     link: {
       py: 3,
-      fontSize: 3,
       variant: 'links.navigation',
     },
   },
