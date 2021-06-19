@@ -5,9 +5,9 @@ module.exports = {
     description: `Find blog posts and portfolio information here`,
     author: `Josh Hamill`,
     navigationLinks: [
-      { title: 'Blog', url: '/blog' },
-      { title: 'Portfolio', url: '/portfolio' },
-      { title: 'Contact', url: '/contact' },
+      // { title: 'Blog', url: '/blog' },
+      // { title: 'Portfolio', url: '/portfolio' },
+      // { title: 'Contact', url: '/contact' },
     ],
     socialLinks: {
       github: 'https://github.com/jhamill34',

@@ -4,6 +4,14 @@ type Data<T> = {
   data: T
 }
 
+type Graph<T> = {
+  edges: [GraphNode<T>]
+}
+
+type GraphNode<T> = {
+  node: T
+}
+
 type SocialLinks = {
   github: string
   linkedin: string
@@ -37,4 +45,31 @@ type TableOfContentsLink = Link & {
 type ImageWithKey = {
   key: string
   image: ImageDataLike
+}
+
+type MdxPostCommon = {
+  frontmatter: {
+    title: string
+    date: string
+    publish: boolean
+  }
+  timeToRead: number
+}
+
+type MdxPostSummary = MdxPostCommon & {
+  excerpt: string
+  fields: {
+    slug: string
+  }
+}
+
+type MdxPost = MdxPostCommon & {
+  body: string
+  frontmatter: {
+    embeddedImagesLocal: [ImageWithKey]
+    embeddedImagesRemote: [ImageWithKey]
+  }
+  tableOfContents: {
+    items: [TableOfContentsLink]
+  }
 }

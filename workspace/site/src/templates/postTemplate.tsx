@@ -9,22 +9,10 @@ import { ImageDataLike } from 'gatsby-plugin-image'
 import components from '../gatsby-plugin-theme-ui/components'
 import { TableOfContents } from '../components/TableOfContents'
 import { PostHeading } from '../components/PostHeading'
+import { ColumnLayout } from '../components/ColumnLayout'
 
 type PostTemplateProps = {
-  mdx: {
-    body: string
-    frontmatter: {
-      title: string
-      date: string
-      publish: boolean
-      embeddedImagesLocal: [ImageWithKey]
-      embeddedImagesRemote: [ImageWithKey]
-    }
-    tableOfContents: {
-      items: [TableOfContentsLink]
-    }
-    timeToRead: number
-  }
+  mdx: MdxPost
 }
 
 export default function PostTemplate(
@@ -44,38 +32,23 @@ export default function PostTemplate(
   )
 
   return (
-    <div
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: ['1fr', '1fr', '1fr 60% 1fr'],
-        gridTemplateAreas: [
-          '"header" "toc" "body"',
-          '"header" "toc" "body"',
-          '". header ." "toc body body"',
-        ],
-      }}
-    >
-      <div sx={{ gridArea: 'header', minWidth: 0 }}>
+    <ColumnLayout
+      header={
         <PostHeading
           datePosted={datePosted}
           published={frontmatter.publish}
           timeToRead={timeToRead}
           title={frontmatter.title}
         />
-      </div>
-
-      <div sx={{ gridArea: 'toc', minWidth: 0 }}>
-        <TableOfContents items={tableOfContents.items} />
-      </div>
-
-      <div sx={{ gridArea: 'body', minWidth: 0 }}>
-        <MDXProvider components={components}>
-          <MDXRenderer localImages={localImages} remoteImages={remoteImages}>
-            {body}
-          </MDXRenderer>
-        </MDXProvider>
-      </div>
-    </div>
+      }
+      left={<TableOfContents items={tableOfContents.items} />}
+    >
+      <MDXProvider components={components}>
+        <MDXRenderer localImages={localImages} remoteImages={remoteImages}>
+          {body}
+        </MDXRenderer>
+      </MDXProvider>
+    </ColumnLayout>
   )
 }
 

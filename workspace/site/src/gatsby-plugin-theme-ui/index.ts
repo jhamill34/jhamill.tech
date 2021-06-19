@@ -72,18 +72,19 @@ const theme: Theme & Variants = {
   },
   colors: {
     text: '#1d1d1d',
-    background: '#eee',
+    background: '#fdfdfd',
     primary: '#5e35b1',
     secondary: '#4527a0',
     muted: '#999',
     dark: '#2d2d2d',
-    warning: '#f00',
+    warning: '#d32f2f',
     modes: {
       dark: {
         text: '#eee',
         background: '#1d1d1d',
         primary: '#9575cd',
         secondary: '#673ab7',
+        warning: '#ef5350',
       },
     },
   },
