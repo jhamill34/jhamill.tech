@@ -60,6 +60,7 @@ importers:
       '@testing-library/react': ^11.2.7
       '@types/dateformat': ^3.0.1
       '@types/jest': ^26.0.23
+      '@types/lunr': ^2.3.3
       '@types/mdx-js__react': ^1.5.3
       '@types/node': ^15.12.2
       '@types/prismjs': ^1.16.5
@@ -76,7 +77,9 @@ importers:
       gatsby-plugin-theme-ui: ^0.8.4
       gatsby-source-filesystem: ^3.6.0
       gatsby-transformer-sharp: ^3.6.0
+      gray-matter: ^4.0.3
       jest-emotion: ^11.0.0
+      lunr: ^2.3.9
       react: ^17.0.2
       react-dom: ^17.0.2
       react-icons: ^4.2.0
@@ -84,7 +87,6 @@ importers:
       remark-slug: ^6.0.0
       theme-ui: ^0.8.4
       typescript: ^4.2.4
-      wasm-game-of-life: link:/Users/joshuarasmussen/Desktop/Code/wasm-game-of-life/pkg
     dependencies:
       '@mdx-js/mdx': 1.6.22
       '@mdx-js/react': 1.6.22_react@17.0.2
@@ -98,18 +100,20 @@ importers:
       gatsby-plugin-theme-ui: 0.8.4_gatsby@3.5.1+theme-ui@0.8.4
       gatsby-source-filesystem: 3.6.0_gatsby@3.5.1
       gatsby-transformer-sharp: 3.6.0_4c0814bac5d0e7f59d436044b5e42548
+      gray-matter: 4.0.3
+      lunr: 2.3.9
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.2.0_react@17.0.2
       react-syntax-highlighter: 15.4.3_react@17.0.2
       remark-slug: 6.0.0
       theme-ui: 0.8.4_@types+react@17.0.6+react@17.0.2
-      wasm-game-of-life: link:../../../wasm-game-of-life/pkg
     devDependencies:
       '@testing-library/jest-dom': 5.12.0
       '@testing-library/react': 11.2.7_react-dom@17.0.2+react@17.0.2
       '@types/dateformat': 3.0.1
       '@types/jest': 26.0.23
+      '@types/lunr': 2.3.3
       '@types/mdx-js__react': 1.5.3
       '@types/node': 15.12.2
       '@types/prismjs': 1.16.5
@@ -3002,6 +3006,10 @@ packages:
   /@types/lodash/4.14.170:
     resolution: {integrity: sha512-bpcvu/MKHHeYX+qeEN8GE7DIravODWdACVA1ctevD8CN24RhPZIKMn9ntfAsrvLfSX3cR5RrBKAbYm9bGs0A+Q==}
     dev: false
+
+  /@types/lunr/2.3.3:
+    resolution: {integrity: sha512-09sXZZVsB3Ib41U0fC+O1O+4UOZT1bl/e+/QubPxpqDWHNEchvx/DEb1KJMOwq6K3MTNzZFoNSzVdR++o1DVnw==}
+    dev: true
 
   /@types/mdast/3.0.3:
     resolution: {integrity: sha512-SXPBMnFVQg1s00dlMCc/jCdvPqdE4mXaMMCeRlxLDmTAEoegHT53xKtkDnzDTOcmMHUfcjyf36/YYZ6SxRdnsw==}
@@ -9856,6 +9864,10 @@ packages:
     resolution: {integrity: sha1-Jzi9nw089PhEkMVzbEhpmsYyzaM=}
     dependencies:
       es5-ext: 0.10.53
+    dev: false
+
+  /lunr/2.3.9:
+    resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
     dev: false
 
   /lz-string/1.4.4:

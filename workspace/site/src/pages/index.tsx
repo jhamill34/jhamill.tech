@@ -1,13 +1,18 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { jsx } from 'theme-ui'
 import { graphql } from 'gatsby'
+import * as lunr from 'lunr'
 import { PostLink } from '../components/PostLink'
 import { SearchBar } from '../components/SearchBar'
 
+type LunrIndex = {
+  lunrIndex: string
+}
+
 type IndexPageProps = {
-  allMdx: Graph<MdxPostSummary>
+  allMdx: LunrIndex & Graph<MdxPostSummary>
 }
 
 function makePostSummary(post: MdxPostSummary): React.ReactElement {
@@ -30,9 +35,32 @@ function makePostSummary(post: MdxPostSummary): React.ReactElement {
   )
 }
 
+function enhanceQuery(query: string): string {
+  return query
+    .replace(/([~^+\\:-])/g, '\\$1')
+    .trim()
+    .split(/\s+/)
+    .map((q) => `${q}*`)
+    .join(' ')
+}
+
 export default function IndexPage(
   props: Data<IndexPageProps>
 ): React.ReactElement {
+  const { lunrIndex } = props.data.allMdx
+  const [query, setQuery] = useState('')
+
+  const idx = useMemo(() => {
+    return lunr.Index.load(JSON.parse(lunrIndex))
+  }, [lunrIndex])
+
+  const q = enhanceQuery(query)
+  console.log(q)
+  const idsOfPost = new Set(idx.search(q).map((r) => r.ref))
+  const posts = props.data.allMdx.edges.filter(({ node }) =>
+    idsOfPost.has(node.id)
+  )
+
   return (
     <div
       sx={{
@@ -42,9 +70,12 @@ export default function IndexPage(
         rowGap: 4,
       }}
     >
-      <SearchBar />
-
-      {props.data.allMdx.edges.map(({ node }) => makePostSummary(node))}
+      <SearchBar
+        onChange={(query: string) => {
+          setQuery(query)
+        }}
+      />
+      {posts.map(({ node }) => makePostSummary(node))}
     </div>
   )
 }
@@ -52,8 +83,10 @@ export default function IndexPage(
 export const query = graphql`
   query IndexPage {
     allMdx {
+      lunrIndex
       edges {
         node {
+          id
           ...PostLink
         }
       }

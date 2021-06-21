@@ -1,6 +1,76 @@
 /* eslint-disable */
 const path = require('path')
+const lunr = require('lunr')
 const { createRemoteFileNode } = require('gatsby-source-filesystem');
+const { createMdxAstCompiler } = require('@mdx-js/mdx')
+const matter = require('gray-matter')
+
+function indexBuilderFactory(documents) {
+  return function buildIndex() {
+    this.ref('id')
+    this.field('title')
+    this.field('date')
+    this.field('body')
+
+    documents.forEach((d) => {
+      this.add(d)
+    })
+  }
+}
+
+function visitMdxNode(node, buffer) {
+  if (node.type === undefined) {
+    return
+  }
+
+  if (node.type === 'text' && node.value !== undefined) {
+    buffer.push(node.value)
+  }
+}
+
+function traverseMdxAst(root) {
+  let stack = [root]
+  let buffer = []
+
+  while (stack.length > 0) {
+    let node = stack.pop()
+
+    visitMdxNode(node, buffer)
+
+    if (node.children !== undefined) {
+      for (let child of node.children.reverse()) {
+        stack.push(child)
+      }
+    }
+  }
+
+  return buffer.join('\n\n')
+}
+
+function createNewResolvers({ createResolvers }) {
+  const resolvers = {
+    MdxConnection: {
+      lunrIndex: {
+        type: 'JSON',
+        resolve: (source) => {
+          let compiler = createMdxAstCompiler({ remarkPlugins: [] })
+          let documents = source.nodes 
+              .map(({ id, frontmatter: { title, date }, rawBody }) => ({
+                id,
+                title,
+                date,
+                body: traverseMdxAst(compiler.parse(matter(rawBody).content))
+              }))
+
+          let idx = lunr(indexBuilderFactory(documents))
+          return JSON.stringify(idx)
+        }
+      }
+    }
+  }
+
+  createResolvers(resolvers)
+}
 
 async function createRemoteEmbeddedImagesNode({ node, createNodeId, actions: { createNode }, cache, store }) {
   if (node.frontmatter === undefined || node.frontmatter.embeddedImagesRemote === undefined) {
@@ -111,7 +181,7 @@ function extendSchema({ actions }) {
 }
 
 async function createPages({ graphql, actions, reporter }) {
-  const { createPage, createRedirect } = actions
+  const { createPage } = actions
 
   const result = await graphql(
     `
@@ -174,3 +244,4 @@ exports.onCreateNode = onCreateNode
 exports.createPages = createPages
 exports.createSchemaCustomization = extendSchema
 exports.onCreateWebpackConfig = onCreateWebpack
+exports.createResolvers = createNewResolvers

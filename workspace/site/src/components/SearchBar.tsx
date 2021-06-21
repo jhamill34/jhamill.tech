@@ -1,14 +1,16 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React, { useState, ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 import { jsx } from 'theme-ui'
 import { FaSearch } from 'react-icons/fa'
 
-export function SearchBar(): React.ReactElement {
-  const [value, setValue] = useState<string>('')
+type SearchBarProps = {
+  onChange: (query: string) => void
+}
 
+export function SearchBar(props: SearchBarProps): React.ReactElement {
   function onChange(e: ChangeEvent<HTMLInputElement>) {
-    setValue(e.target.value)
+    props.onChange(e.target.value)
   }
 
   return (
@@ -45,7 +47,6 @@ export function SearchBar(): React.ReactElement {
             },
           }}
           type="search"
-          value={value}
         />
       </div>
     </div>

@@ -48,6 +48,7 @@ type ImageWithKey = {
 }
 
 type MdxPostCommon = {
+  id: string
   frontmatter: {
     title: string
     date: string
