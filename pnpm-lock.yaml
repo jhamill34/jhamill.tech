@@ -54,6 +54,7 @@ importers:
 
   workspace/site:
     specifiers:
+      '@emotion/react': ^11.4.0
       '@mdx-js/mdx': ^1.6.22
       '@mdx-js/react': ^1.6.22
       '@testing-library/jest-dom': ^5.12.0
@@ -88,6 +89,7 @@ importers:
       theme-ui: ^0.8.4
       typescript: ^4.2.4
     dependencies:
+      '@emotion/react': 11.4.0_@types+react@17.0.6+react@17.0.2
       '@mdx-js/mdx': 1.6.22
       '@mdx-js/react': 1.6.22_react@17.0.2
       copy-to-clipboard: 3.3.1
@@ -1587,6 +1589,13 @@ packages:
     dependencies:
       regenerator-runtime: 0.13.7
 
+  /@babel/runtime/7.14.6:
+    resolution: {integrity: sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.7
+    dev: false
+
   /@babel/standalone/7.14.3:
     resolution: {integrity: sha512-nv9eIzaXjrPwfytt5SfKAbM5DJWfpJ6EiGhRar+p95k8r6ZNydF8svvjQVpbqqPIubR+tz1WyRlMJ3AUfXg4Pg==}
     dev: false
@@ -1702,7 +1711,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.14.0
+      '@babel/runtime': 7.14.6
       '@emotion/cache': 11.4.0
       '@emotion/serialize': 1.0.2
       '@emotion/sheet': 1.0.1

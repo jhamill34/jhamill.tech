@@ -16,13 +16,13 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
   return (
     <div
       sx={{
-        gridColumn: '1 / -1',
         borderBottomWidth: 4,
         borderBottomStyle: 'solid',
         borderBottomColor: 'primary',
         display: 'flex',
         alignItems: 'center',
         fontWeight: 'bold',
+        m: 3,
       }}
     >
       <FaSearch sx={{ display: 'inline-block', fontSize: 4, marginRight: 3 }} />

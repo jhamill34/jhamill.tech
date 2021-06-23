@@ -3,9 +3,11 @@
 import React, { useState, useMemo } from 'react'
 import { jsx } from 'theme-ui'
 import { graphql } from 'gatsby'
-import * as lunr from 'lunr'
+import lunr from 'lunr'
 import { PostLink } from '../components/PostLink'
 import { SearchBar } from '../components/SearchBar'
+import { Banner } from '../components/Banner'
+import { NetworkAnimation } from '../components/NetworkAnimation'
 
 type LunrIndex = {
   lunrIndex: string
@@ -17,6 +19,7 @@ type IndexPageProps = {
 
 function makePostSummary(post: MdxPostSummary): React.ReactElement {
   const {
+    id,
     frontmatter: { publish, title, date },
     fields: { slug },
     timeToRead,
@@ -25,6 +28,7 @@ function makePostSummary(post: MdxPostSummary): React.ReactElement {
   return (
     <PostLink
       datePosted={new Date(date)}
+      key={id}
       published={publish}
       timeToRead={timeToRead}
       title={title}
@@ -70,11 +74,28 @@ export default function IndexPage(
         rowGap: 4,
       }}
     >
-      <SearchBar
-        onChange={(query: string) => {
-          setQuery(query)
+      <div
+        sx={{
+          gridColumn: '1 / -1',
         }}
-      />
+      >
+        <Banner
+          bg={<NetworkAnimation />}
+          subtitle="Welcome to my blog"
+          title="Blog"
+        />
+      </div>
+      <div
+        sx={{
+          gridColumn: '1 / -1',
+        }}
+      >
+        <SearchBar
+          onChange={(query: string) => {
+            setQuery(query)
+          }}
+        />
+      </div>
       {posts.map(({ node }) => makePostSummary(node))}
     </div>
   )
