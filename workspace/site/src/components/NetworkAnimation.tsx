@@ -96,8 +96,14 @@ type SpriteComponent = {
 
 type RelationComponent = {
   entities: {
-    from: BaseComponent & PositionComponent & AppliedForceComponent
-    to: BaseComponent & PositionComponent & AppliedForceComponent
+    from: BaseComponent &
+      PositionComponent &
+      AppliedForceComponent &
+      SpriteComponent
+    to: BaseComponent &
+      PositionComponent &
+      AppliedForceComponent &
+      SpriteComponent
   }
 }
 
@@ -315,14 +321,54 @@ function preGenerateParticleSystem(batch: number, max: number): GlobalSystem {
 
 function preGenerateEdgesSystem(world: World) {
   const newEntities: Entity[] = []
-  const vertexCache: { [key: string]: number } = {}
-
-  world.entities.forEach((untypedSubject) => {
+  const vertexCache: { [key: string]: string[] } = {}
+  for (const untypedSubject of world.entities) {
     const positionSubject = untypedSubject as BaseComponent &
       PositionComponent &
       AppliedForceComponent &
       SpriteComponent
+    if (
+      positionSubject.position !== undefined &&
+      positionSubject.sprite !== undefined &&
+      positionSubject.force !== undefined &&
+      positionSubject.id !== undefined
+    ) {
+      newEntities.push(untypedSubject)
+      vertexCache[positionSubject.id] = []
+    }
+  }
+
+  for (const untypedSubject of world.entities) {
     const relationSubject = untypedSubject as RelationComponent
+    if (relationSubject.entities !== undefined) {
+      const [distance] = calculateDistance(
+        relationSubject.entities.from,
+        relationSubject.entities.to
+      )
+
+      if (
+        vertexCache[relationSubject.entities.from.id] &&
+        vertexCache[relationSubject.entities.to.id] &&
+        distance < 90 &&
+        relationSubject.entities.from.sprite.color.a > 0.35 &&
+        relationSubject.entities.to.sprite.color.a > 0.35
+      ) {
+        vertexCache[relationSubject.entities.from.id].push(
+          relationSubject.entities.to.id
+        )
+        vertexCache[relationSubject.entities.to.id].push(
+          relationSubject.entities.from.id
+        )
+        newEntities.push(untypedSubject)
+      }
+    }
+  }
+
+  for (const untypedSubject of world.entities) {
+    const positionSubject = untypedSubject as BaseComponent &
+      PositionComponent &
+      AppliedForceComponent &
+      SpriteComponent
 
     if (
       positionSubject.position !== undefined &&
@@ -330,12 +376,7 @@ function preGenerateEdgesSystem(world: World) {
       positionSubject.force !== undefined &&
       positionSubject.id !== undefined
     ) {
-      if (vertexCache[positionSubject.id] === undefined) {
-        vertexCache[positionSubject.id] = 0
-      }
-      newEntities.push(untypedSubject)
-
-      world.entities.forEach((untypedOther) => {
+      for (const untypedOther of world.entities) {
         const otherSubject = untypedOther as BaseComponent &
           PositionComponent &
           SpriteComponent &
@@ -346,19 +387,17 @@ function preGenerateEdgesSystem(world: World) {
           otherSubject.force !== undefined &&
           otherSubject.id !== undefined
         ) {
-          if (vertexCache[otherSubject.id] === undefined) {
-            vertexCache[otherSubject.id] = 0
-          }
           const [distance] = calculateDistance(positionSubject, otherSubject)
           if (
-            vertexCache[positionSubject.id] < 8 &&
-            vertexCache[otherSubject.id] < 8 &&
-            distance < 100 &&
-            positionSubject.sprite.color.a > 0.25 &&
-            otherSubject.sprite.color.a > 0.25
+            !vertexCache[otherSubject.id].includes(positionSubject.id) &&
+            vertexCache[positionSubject.id].length < 6 &&
+            vertexCache[otherSubject.id].length < 6 &&
+            distance < 90 &&
+            positionSubject.sprite.color.a > 0.35 &&
+            otherSubject.sprite.color.a > 0.35
           ) {
-            vertexCache[positionSubject.id]++
-            vertexCache[otherSubject.id]++
+            vertexCache[positionSubject.id].push(otherSubject.id)
+            vertexCache[otherSubject.id].push(positionSubject.id)
             newEntities.push({
               id: makeid(10),
               timeAdded: Date.now(),
@@ -370,24 +409,9 @@ function preGenerateEdgesSystem(world: World) {
             })
           }
         }
-      })
-    } else if (relationSubject.entities !== undefined) {
-      const [distance] = calculateDistance(
-        relationSubject.entities.from,
-        relationSubject.entities.to
-      )
-
-      if (
-        vertexCache[relationSubject.entities.from.id] < 8 &&
-        vertexCache[relationSubject.entities.to.id] < 8 &&
-        distance < 100
-      ) {
-        newEntities.push(untypedSubject)
       }
-    } else {
-      newEntities.push(untypedSubject)
     }
-  })
+  }
 
   world.entities = newEntities
 }
@@ -465,9 +489,11 @@ function displayEntitySystemFactory(ctx: CanvasRenderingContext2D): System {
 
 function displayEdgeEntitySystemFactory(ctx: CanvasRenderingContext2D): System {
   return function displaySystem(untypedEntity: Entity) {
-    const relation = untypedEntity as RelationComponent
-    if (relation.entities !== undefined) {
-      ctx.strokeStyle = 'rgba(100, 100, 100, 0.25)'
+    const relation = untypedEntity as RelationComponent & BaseComponent
+    if (relation.entities !== undefined && relation.timeAdded !== undefined) {
+      const alpha = 0.25
+
+      ctx.strokeStyle = `rgba(100, 100, 100, ${alpha})`
       ctx.beginPath()
       ctx.moveTo(
         relation.entities.from.position.x,
