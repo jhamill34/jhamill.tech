@@ -311,7 +311,7 @@ function preGenerateParticleSystem(batch: number, max: number): GlobalSystem {
 
     const elapsedTime = Date.now() - lastAddedTime
 
-    if (world.entities.length < max && elapsedTime > 200) {
+    if (world.entities.length < max && elapsedTime > 50) {
       world.entities = world.entities.concat(
         createParticles(batch, world.width, world.height)
       )
