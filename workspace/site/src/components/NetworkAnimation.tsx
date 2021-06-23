@@ -706,6 +706,18 @@ function fadeInSystem(untypedEntity: Entity, world: World) {
   }
 }
 
+function colorChanger(untypedEntity: Entity) {
+  const entity = untypedEntity as SpriteComponent & BaseComponent
+  if (entity.sprite === undefined || entity.timeAdded === undefined) {
+    return
+  }
+
+  const elapsedTime = Date.now() - entity.timeAdded
+
+  entity.sprite.color.h =
+    0.5 * Math.sin(((2 * Math.PI) / 20000) * elapsedTime) + 0.5
+}
+
 function growParticleSystem(untypedEntity: Entity) {
   const entity = untypedEntity as SpriteComponent & BaseComponent
   if (entity.sprite === undefined || entity.timeAdded === undefined) {
@@ -820,6 +832,7 @@ export function NetworkAnimation(): React.ReactElement {
         rotateSystem,
         moveSystem,
         fadeInSystem,
+        colorChanger,
         growParticleSystem,
         displayEdgeEntitySystemFactory(ctx),
         displayEntitySystemFactory(ctx),

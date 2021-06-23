@@ -55,6 +55,7 @@ function createNewResolvers({ createResolvers }) {
         resolve: (source) => {
           let compiler = createMdxAstCompiler({ remarkPlugins: [] })
           let documents = source.nodes 
+              .filter(({ frontmatter: { publish }}) => process.env.NODE_ENV === 'development' || publish)
               .map(({ id, frontmatter: { title, date }, rawBody }) => ({
                 id,
                 title,

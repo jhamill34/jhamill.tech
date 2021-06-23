@@ -1,9 +1,7 @@
 ---
+publish: true
 title: First~Post
 date: June 6, 2021
-embeddedImagesLocal:
-  - key: atlas
-    image: atlas.jpeg
 embeddedImagesRemote:
   - key: track
     image: https://d3j2bju5c7tc02.cloudfront.net/2017_32/cropped-dreamstime_s_34232682.jpg
@@ -31,7 +29,7 @@ function foo() {
 <h1>Hello world</h1>
 ```
 
-<Image image={props.localImages['atlas']} />
+<Image image={props.remoteImages['track']} />
 
 ```java title=App
 public class App {

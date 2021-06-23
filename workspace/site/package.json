@@ -4,6 +4,8 @@
   "description": "The main repo for the actual website code",
   "main": "index.js",
   "scripts": {
+    "build": "gatsby build",
+    "serve": "gatsby serve",
     "start": "gatsby develop",
     "compile": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
