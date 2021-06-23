@@ -21,7 +21,6 @@
     "gatsby": "^3.5.1",
     "gatsby-plugin-image": "^1.6.0",
     "gatsby-plugin-mdx": "^2.6.0",
-    "gatsby-plugin-pnpm": "^1.2.6",
     "gatsby-plugin-sharp": "^3.6.0",
     "gatsby-plugin-theme-ui": "^0.8.4",
     "gatsby-source-filesystem": "^3.6.0",
