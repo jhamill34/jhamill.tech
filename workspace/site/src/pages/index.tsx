@@ -81,7 +81,7 @@ export default function IndexPage(
       >
         <Banner
           bg={<NetworkAnimation />}
-          subtitle="Welcome to my blog"
+          subtitle="I like to write about all things that make software engineering fun"
           title="Blog"
         />
       </div>
@@ -96,7 +96,23 @@ export default function IndexPage(
           }}
         />
       </div>
-      {posts.map(({ node }) => makePostSummary(node))}
+      {posts.length > 0 ? (
+        posts.map(({ node }) => makePostSummary(node))
+      ) : (
+        <div
+          sx={{
+            textAlign: 'center',
+            gridColumn: '1 / -1',
+            fontSize: 4,
+            fontWeight: 'bold',
+          }}
+        >
+          No posts found{' '}
+          <span aria-label="frowning face" role="img">
+            🙁
+          </span>
+        </div>
+      )}
     </div>
   )
 }
