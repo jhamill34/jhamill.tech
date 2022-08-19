@@ -389,7 +389,7 @@ function preGenerateEdgesSystem(world: World) {
         ) {
           const [distance] = calculateDistance(positionSubject, otherSubject)
           if (
-            !vertexCache[otherSubject.id].includes(positionSubject.id) &&
+            vertexCache[otherSubject.id].indexOf(positionSubject.id) < 0 &&
             vertexCache[positionSubject.id].length < 6 &&
             vertexCache[otherSubject.id].length < 6 &&
             distance < 90 &&
