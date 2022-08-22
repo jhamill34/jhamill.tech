@@ -119,7 +119,7 @@ export default function IndexPage(
 
 export const query = graphql`
   query IndexPage {
-    allMdx {
+    allMdx(filter: { frontmatter: { publish: { eq: true } } }) {
       lunrIndex
       edges {
         node {
