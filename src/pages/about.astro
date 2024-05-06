@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "About Me";
+
+const skills = ["HTML", "CSS", "Astro"];
+const skillColor = "navy";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<style define:vars={{skillColor}}>
+		.skill {
+			color: var(--skillColor);
+			font-weight: bold;
+		}
+	</style>
+
+	<ul>
+		{skills.map((skill) => (
+			<li class="skill">{skill}</li>
+		))}
+	</ul>
+</BaseLayout>
