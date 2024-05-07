@@ -1,9 +1,42 @@
 ---
 ---
 
-<div class="nav-links">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/blog">Blog</a>
-    <a href="/tags">Tags</a>
-</div>
+<style>
+nav {
+    background-color: var(--neutral-800);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+nav .brand {
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0;
+    gap: 1.5rem;
+}
+
+nav ul li {
+    font-weight: bold;
+}
+
+</style>
+
+<nav class="nav-links">
+    <div class="brand">
+        <a href="/">blog.jhamill.tech</a>
+    </div>
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/tags">Tags</a></li>
+    </ul>
+</nav>

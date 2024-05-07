@@ -110,18 +110,6 @@
     --primary-800: #854d0e;
     --primary-900: #713f12;
 
-    /* Cyan */
-    /* --secondary-50: #ecfeff; */
-    /* --secondary-100: #cffafe; */
-    /* --secondary-200: #a5f3fc; */
-    /* --secondary-300: #67e8f9; */
-    /* --secondary-400: #22d3ee; */
-    /* --secondary-500: #06b6d4; */
-    /* --secondary-600: #0891b2; */
-    /* --secondary-700: #0e7490; */
-    /* --secondary-800: #155e75; */
-    /* --secondary-900: #164e63; */
-
     /* Indigo */
     --secondary-50: #eef2ff;
     --secondary-100: #ede9fe;
@@ -154,16 +142,13 @@ html {
     box-sizing: border-box;
 }
 
-* {
-    margin: 0;
-} 
-
 body {
     line-height: 1.5;
     min-height: 100vh;
 
     display: flex;
     flex-direction: column;
+    margin: 0;
 }
 
 img, picture, video, canvas, svg {
@@ -197,7 +182,40 @@ h1, h2, h3, h4, h5, h6 {
 main {
     /* TODO: Unsure about this width */
     max-width: 800px;
+    width: 100%;
     align-self: center;
     flex-grow: 1;
+    padding: 1rem;
+}
+
+.tags .tag a {
+    display: block;
+    background-color: var(--secondary-400);
+    color: var(--neutral-900);
+    text-decoration: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 3px 3px 0 var(--secondary-500);
+}
+
+.tags .tag a::before {
+    content: '#';
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tags .tag a:hover {
+    background-color: var(--secondary-500);
+    box-shadow: 0 0 0 var(--secondary-500);
+    transform: translate(3px, 3px);
 }
 

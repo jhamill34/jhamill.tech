@@ -10,10 +10,10 @@ const tags = [...new Set(allPosts.map(post => post.data.tags).flat())];
 
 <BaseLayout pageTitle={pageTitle}>
 	<p>Tags list page content</p>
-	<div class="tags">
+	<ul class="tags">
 		{tags.map(tag => (
-			<p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+			<li class="tag"><a href={`/tags/${tag}`}>{tag}</a></li>
 		))}
-	</div>
+	</ul>
 </BaseLayout>
 
