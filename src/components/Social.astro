@@ -1,10 +1,10 @@
 ---
 interface Props {
     platform: string;
-    username: string;
+    url: string;
 }
 
-const { platform, username } = Astro.props;
+const { platform, url } = Astro.props;
 ---
 
 <style>
@@ -26,6 +26,10 @@ const { platform, username } = Astro.props;
     content: "\e61b";
 }
 
+.icon-linkedin::before {
+    content: "\f08c";
+}
+
 a {
     transition: color 0.2s;
 }
@@ -37,7 +41,7 @@ a:hover {
 </style>
 
 
-<a href={`https://www.${platform}.com/${username}`}>
+<a href={url} target="_blank" rel="noopener noreferrer">
     <i class={`icon icon-${platform}`}></i>
 </a>
 
