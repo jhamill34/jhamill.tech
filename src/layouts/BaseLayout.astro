@@ -23,8 +23,10 @@ const { pageTitle } = Astro.props;
     </head>
     <body>
         <Header />
-        <h1 transition:animate={fade({duration: "400ms"})}>{pageTitle}</h1>
-        <slot />
+        <main>
+            <h1 transition:animate={fade({duration: "400ms"})}>{pageTitle}</h1>
+            <slot />
+        </main>
         <Footer />
     </body>
 </html>

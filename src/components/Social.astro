@@ -7,6 +7,38 @@ interface Props {
 const { platform, username } = Astro.props;
 ---
 
-<a href={`https://www.${platform}.com/${username}`}>{platform}</a>
+<style>
+
+.icon {
+    display: inline-block;
+    font-size: 2rem;
+    font-family: "Font Awesome 6 Brands";
+    font-style: normal;
+    font-smooth: always;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.icon-github::before {
+    content: "\f113";
+}
+
+.icon-twitter::before {
+    content: "\e61b";
+}
+
+a {
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-800);
+}
+
+</style>
+
+
+<a href={`https://www.${platform}.com/${username}`}>
+    <i class={`icon icon-${platform}`}></i>
+</a>
 
 
