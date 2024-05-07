@@ -1,6 +1,5 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import { Image } from "astro:assets";
 
 interface Props {
 	blogList: CollectionEntry<'posts'>[];
@@ -119,7 +118,7 @@ a.post-link > p {
 		<li class="post-item">
 			<a href={`/posts/${post.slug}`} class="post-link">
 				<div class="post-image">
-					<Image src={post.data.image.url} alt={post.data.image.alt} inferSize={true} />
+					<img src={post.data.image.url} alt={post.data.image.alt} />
 				</div>
 				<div class="post-content">
 					<div class="post-header">
