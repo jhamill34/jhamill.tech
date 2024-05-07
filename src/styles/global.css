@@ -134,7 +134,7 @@
 html {
     font: 100%;
     font-family: var(--body-font);
-    background-color: var(--neutral-900);
+    background: linear-gradient(100deg, var(--neutral-800), var(--neutral-900));
     color: var(--neutral-50);
 }
 
@@ -186,36 +186,5 @@ main {
     align-self: center;
     flex-grow: 1;
     padding: 1rem;
-}
-
-.tags .tag a {
-    display: block;
-    background-color: var(--secondary-400);
-    color: var(--neutral-900);
-    text-decoration: none;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-weight: bold;
-    transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
-    box-shadow: 3px 3px 0 var(--secondary-500);
-}
-
-.tags .tag a::before {
-    content: '#';
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.tags .tag a:hover {
-    background-color: var(--secondary-500);
-    box-shadow: 0 0 0 var(--secondary-500);
-    transform: translate(3px, 3px);
 }
 
