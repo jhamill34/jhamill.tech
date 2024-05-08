@@ -58,7 +58,12 @@ const { post } = Astro.props
 }
 </style>
 
-<BaseLayout pageTitle={post.data.title}>
+<BaseLayout 
+  pageTitle={post.data.title}
+  description={post.data.description}
+  author={post.data.author}
+  ogImage={post.data.thumbnail.url}
+>
     <TagList tags={post.data.tags} />
     <div class="heading">
       <p>Written by {post.data.author}</p>

@@ -1,4 +1,5 @@
 ---
+import { SITE } from "../config.ts";
 import { ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -6,18 +7,46 @@ import "../styles/global.css";
 
 interface Props {
     pageTitle: string;
+    description?: string;
+    author?: string;
+    ogImage?: string;
+    canonicalURL?: string;
 }
 
-const { pageTitle } = Astro.props;
+const { 
+    pageTitle, 
+    author = SITE.author, 
+    description = SITE.desc, 
+    ogImage = SITE.ogImage, 
+    canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+} = Astro.props;
 ---
 
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" href="/favicon.ico" type="image/svg+xml">
         <meta name="viewport" content="width=device-width" />
+        <link rel="icon" href="/favicon.ico" type="image/svg+xml">
         <meta name="generator" content={Astro.generator} />
+
         <title>{pageTitle}</title>
+        <meta name="title" content={pageTitle} />
+        <meta name="description" content={description} />
+        <meta name="author" content={author} />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+
+
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:image" content={ogImage} />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta property="twitter:title" content={pageTitle} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={ogImage} />
+
         <ViewTransitions />
     </head>
     <body>
