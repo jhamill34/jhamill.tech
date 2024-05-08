@@ -75,10 +75,12 @@ const buttons = document.querySelectorAll(".container button");
 
 buttons.forEach(button => {
 	button.addEventListener("click", () => {
-		const value = button.nextElementSibling.textContent;
-		navigator.clipboard.writeText(value).then(() => {
-			console.log("Success!");
-		});
+		const value = button.nextElementSibling?.textContent;
+		if (value !== undefined && value !== null) {
+			navigator.clipboard.writeText(value).then(() => {
+				console.log("Success!");
+			});
+		}
 	});
 });
 
