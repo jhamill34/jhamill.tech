@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { type CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -118,7 +119,7 @@ a.post-link > p {
 		<li class="post-item">
 			<a href={`/posts/${post.slug}`} class="post-link">
 				<div class="post-image">
-					<img src={post.data.image.url} alt={post.data.image.alt} />
+					<Image src={post.data.image.url} alt={post.data.image.alt} inferSize={true} />
 				</div>
 				<div class="post-content">
 					<div class="post-header">
