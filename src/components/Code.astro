@@ -1,0 +1,85 @@
+---
+import "../styles/code.css";
+const props = Astro.props;
+---
+
+<style>
+
+.container {
+	position: relative;
+}
+
+pre {
+	padding: 1rem;
+	padding-top: 2rem;
+	border-radius: 0.5rem;
+	box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.2);
+	border: 1px solid var(--neutral-800);
+	background-color: var(--neutral-900) !important;
+}
+
+button {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	color: var(--neutral-400);
+	background: transparent;
+	border: 1px solid var(--neutral-400);
+	border-radius: 0.5rem;
+	padding: 0.25rem 0.75rem;
+	line-height: 1.5;
+	transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s;
+	cursor: pointer;
+}
+
+button:hover {
+	color: var(--primary-400);
+	border-color: var(--primary-400);
+	transform: scale(0.95);
+}
+
+.icon {
+	display: block;
+	font-family: "Font Awesome 6 Free";
+	font-weight: normal;
+	font-style: normal;
+	font-smooth: always;
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+
+.icon-clip::before {
+	content: "\f328";
+}
+
+.language {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	padding: 0.5rem;
+	font-size: 0.83rem;
+	color: var(--neutral-400);
+}
+
+</style>
+
+<div class="container">
+	<span class="language">{props["data-language"]}</span>
+	<button title="copy to clipboard"><i class="icon icon-clip"></i></button>
+	<pre {...props}><slot /></pre>
+</div>
+
+<script>
+const buttons = document.querySelectorAll(".container button");
+
+buttons.forEach(button => {
+	button.addEventListener("click", () => {
+		const value = button.nextElementSibling.textContent;
+		navigator.clipboard.writeText(value).then(() => {
+			console.log("Success!");
+		});
+	});
+});
+
+</script>

@@ -1,0 +1,43 @@
+pre code {
+    display: block;
+    width: 100%;
+}
+
+.line {
+    display: inline-block;
+    width: 100%;
+}
+
+.line.diff {
+    position: relative;
+}
+
+.line.diff.add {
+    background-color: rgba(0, 200, 0, 0.2);
+}
+
+.line.diff.add::before {
+    position: absolute;
+    left: 0;
+    content: "+";
+}
+
+.line.diff.remove {
+    background-color: rgba(200, 0, 0, 0.2);
+}
+
+.line.diff.remove::before {
+    position: absolute;
+    left: 0;
+    content: "-";
+}
+
+.line.highlighted {
+    background-color: rgba(200, 200, 150, 0.2);
+}
+
+.highlighted-word {
+    border: 1px solid var(--neutral-700);
+    border-radius: 0.25rem;
+    background-color: var(--neutral-800);
+}
