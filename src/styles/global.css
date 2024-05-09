@@ -188,3 +188,10 @@ main {
     padding: 1rem;
 }
 
+#my-canvas {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: -1;
+}
+

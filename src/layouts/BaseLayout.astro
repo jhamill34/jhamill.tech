@@ -6,7 +6,7 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
 interface Props {
-    pageTitle: string;
+    pageTitle?: string;
     description?: string;
     author?: string;
     ogImage?: string;
@@ -50,12 +50,34 @@ const {
         <ViewTransitions />
     </head>
     <body>
+        <canvas id="my-canvas" width="300" height="300"></canvas>
+
         <Header />
         <main>
-            <h1>{pageTitle}</h1>
+            {pageTitle && <h1>{pageTitle}</h1>}
             <slot />
         </main>
         <Footer />
     </body>
 </html>
+
+<script>
+const canvas = document.getElementById("my-canvas") as HTMLCanvasElement;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+if (canvas !== null) {
+    const ctx = canvas.getContext("2d");
+    if (ctx !== null) {
+        ctx.fillStyle = "#123456";
+        ctx.arc(300, 300, 50, 0, 360);
+        ctx.fill();
+    } 
+}
+</script>
 
