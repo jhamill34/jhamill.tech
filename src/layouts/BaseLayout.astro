@@ -62,22 +62,6 @@ const {
 </html>
 
 <script>
-const canvas = document.getElementById("my-canvas") as HTMLCanvasElement;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-if (canvas !== null) {
-    const ctx = canvas.getContext("2d");
-    if (ctx !== null) {
-        ctx.fillStyle = "#123456";
-        ctx.arc(300, 300, 50, 0, 360);
-        ctx.fill();
-    } 
-}
+    import "../scripts/animation.ts";
 </script>
 
