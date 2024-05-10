@@ -219,13 +219,13 @@ class NetworkAnimation {
             const pos = this._nodes[i];
             ctx.fillStyle = "rgba(234, 179, 8, 0.1)";
             ctx.beginPath();
-            ctx.arc(pos.position.x, pos.position.y, 10, 0, 360);
+            ctx.arc(pos.position.x, pos.position.y, 5, 0, 360);
             ctx.fill();
         }
     }
 }
 
-const n = new NetworkAnimation("my-canvas", 50);
+const n = new NetworkAnimation("my-canvas", 100);
 
 window.addEventListener("mousemove", (e) => {
     n.updateCenter(e);
