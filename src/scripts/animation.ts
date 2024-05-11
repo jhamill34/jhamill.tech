@@ -77,21 +77,29 @@ type Vector = {
 class NetworkAnimation {
     private readonly _canvas: HTMLCanvasElement | null;
     private readonly _ctx: CanvasRenderingContext2D | null;
-    private readonly _max_nodes: number;
     private readonly _bounds: Bounds;
     private readonly _center: Vector;
 
-    private _nodes: Entity[];
-    private _nodes_buffer: Entity[];
+    private _max_nodes: number;
+    private _nodes: Entity[] = [];
+    private _nodes_buffer: Entity[] = [];
 
-    constructor(id: string, max_nodes: number) {
+    private _attract_charge: number;
+    private _is_charging: boolean;
+    private _is_cooldown: boolean;
+    private _blast_charge: number;
+
+    constructor(id: string) {
         const canvas = document.getElementById(id) as HTMLCanvasElement;
         this._ctx = canvas.getContext("2d");
         this._canvas = canvas;
 
-        this._max_nodes = max_nodes;
-        this._nodes = new Array(max_nodes);
-        this._nodes_buffer = new Array(max_nodes);
+        this._attract_charge = 25;
+        this._blast_charge = 0;
+        this._is_charging = false;
+        this._is_cooldown = false;
+
+        this._max_nodes = 0;
         this._bounds = { lower: { x: 0, y: 0 }, upper: { x: 0, y: 0 } };
         this._center = { x: 0, y: 0 };
     }
@@ -109,9 +117,12 @@ class NetworkAnimation {
 
         this._bounds.upper.x = window.innerWidth;
         this._bounds.upper.y = window.innerHeight;
+        this._max_nodes = Math.floor(window.innerWidth / 20);
+        this._nodes = new Array(this._max_nodes);
+        this._nodes_buffer = new Array(this._max_nodes);
 
-        this._center.x = (this._bounds.upper.x - this._bounds.lower.x) / 2;
-        this._center.y = (this._bounds.upper.y - this._bounds.lower.y) / 2;
+        this._center.x = 0;
+        this._center.y = 0;
 
         console.log(canvas.width, canvas.height);
         ctx.scale(dpr, dpr);
@@ -120,6 +131,10 @@ class NetworkAnimation {
     updateCenter(c: Vector) {
         this._center.x = c.x;
         this._center.y = c.y;
+    }
+
+    setCharging(c: boolean) {
+        this._is_charging = c;
     }
 
     spawn() {
@@ -149,6 +164,32 @@ class NetworkAnimation {
 
             let coef: number = 0;
             const force: Vector = { x: 0, y: 0 };
+
+            if (this._center.x > 0 && this._center.y > 0) {
+                distance.x = this._center.x - cur.position.x;
+                distance.y = this._center.y - cur.position.y;
+
+                const dSquare = dot(distance, distance);
+
+                const charge = !this._is_charging && this._blast_charge < 0 ? this._blast_charge : this._attract_charge;
+
+                coef = (cur.charge * charge) / dSquare;
+                force.x += coef * distance.x;
+                force.y += coef * distance.y;
+            }
+
+            // TODO: Make this non-linear (i.e. fade-in/fade-out
+            if (this._is_charging && !this._is_cooldown) {
+                this._blast_charge = Math.max(this._blast_charge - 0.1, -1000);
+            } else if (this._blast_charge < 0) {
+                this._is_cooldown = true;
+                if (this._blast_charge > -0.1) {
+                    this._blast_charge = 0;
+                    this._is_cooldown = false;
+                }
+                this._blast_charge = this._blast_charge / 1.0005;
+            }
+
 
             for (let j = 0; j < this._max_nodes; j++) {
                 if (i === j) continue;
@@ -225,7 +266,7 @@ class NetworkAnimation {
     }
 }
 
-const n = new NetworkAnimation("my-canvas", 100);
+const n = new NetworkAnimation("my-canvas");
 
 window.addEventListener("mousemove", (e) => {
     n.updateCenter(e);
@@ -233,6 +274,14 @@ window.addEventListener("mousemove", (e) => {
 
 window.addEventListener("mouseenter", (e) => {
     n.updateCenter(e);
+});
+
+window.addEventListener("mouseup", () => {
+    n.setCharging(false);
+});
+
+window.addEventListener("mousedown", () => {
+    n.setCharging(true);
 });
 
 window.addEventListener("mouseleave", () => {
