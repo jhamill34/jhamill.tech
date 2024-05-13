@@ -165,30 +165,30 @@ class NetworkAnimation {
             let coef: number = 0;
             const force: Vector = { x: 0, y: 0 };
 
-            if (this._center.x > 0 && this._center.y > 0) {
-                distance.x = this._center.x - cur.position.x;
-                distance.y = this._center.y - cur.position.y;
+            // if (this._center.x > 0 && this._center.y > 0) {
+            //     distance.x = this._center.x - cur.position.x;
+            //     distance.y = this._center.y - cur.position.y;
 
-                const dSquare = dot(distance, distance);
+            //     const dSquare = dot(distance, distance);
 
-                const charge = !this._is_charging && this._blast_charge < 0 ? this._blast_charge : this._attract_charge;
+            //     const charge = !this._is_charging && this._blast_charge < 0 ? this._blast_charge : this._attract_charge;
 
-                coef = (cur.charge * charge) / dSquare;
-                force.x += coef * distance.x;
-                force.y += coef * distance.y;
-            }
+            //     coef = (cur.charge * charge) / dSquare;
+            //     force.x += coef * distance.x;
+            //     force.y += coef * distance.y;
+            // }
 
-            // TODO: Make this non-linear (i.e. fade-in/fade-out
-            if (this._is_charging && !this._is_cooldown) {
-                this._blast_charge = Math.max(this._blast_charge - 0.1, -1000);
-            } else if (this._blast_charge < 0) {
-                this._is_cooldown = true;
-                if (this._blast_charge > -0.1) {
-                    this._blast_charge = 0;
-                    this._is_cooldown = false;
-                }
-                this._blast_charge = this._blast_charge / 1.0005;
-            }
+            // // TODO: Make this non-linear (i.e. fade-in/fade-out
+            // if (this._is_charging && !this._is_cooldown) {
+            //     this._blast_charge = Math.max(this._blast_charge - 0.1, -1000);
+            // } else if (this._blast_charge < 0) {
+            //     this._is_cooldown = true;
+            //     if (this._blast_charge > -0.1) {
+            //         this._blast_charge = 0;
+            //         this._is_cooldown = false;
+            //     }
+            //     this._blast_charge = this._blast_charge / 1.0005;
+            // }
 
 
             for (let j = 0; j < this._max_nodes; j++) {
@@ -207,8 +207,8 @@ class NetworkAnimation {
                 force.y += coef * distance.y;
             }
 
-            force.x += cur.mass * 0.01 * -cur.velocity.x;
-            force.y += cur.mass * 0.01 * -cur.velocity.y;
+            force.x += cur.mass * 0.02 * -cur.velocity.x;
+            force.y += cur.mass * 0.02 * -cur.velocity.y;
 
             this._nodes[i].acceleration.x = cur.acceleration.x + 0.1 * (force.x / cur.mass);
             this._nodes[i].acceleration.y = cur.acceleration.y + 0.1 * (force.y / cur.mass);
@@ -258,9 +258,9 @@ class NetworkAnimation {
 
         for (let i = 0; i < this._max_nodes; i++) {
             const pos = this._nodes[i];
-            ctx.fillStyle = "rgba(234, 179, 8, 0.1)";
+            ctx.fillStyle = "rgba(234, 179, 8, 0.15)";
             ctx.beginPath();
-            ctx.arc(pos.position.x, pos.position.y, 5, 0, 360);
+            ctx.arc(pos.position.x, pos.position.y, 3, 0, 360);
             ctx.fill();
         }
     }
