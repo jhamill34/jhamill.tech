@@ -84,20 +84,20 @@ class NetworkAnimation {
     private _nodes: Entity[] = [];
     private _nodes_buffer: Entity[] = [];
 
-    private _attract_charge: number;
-    private _is_charging: boolean;
-    private _is_cooldown: boolean;
-    private _blast_charge: number;
+    // private _attract_charge: number;
+    // private _is_charging: boolean;
+    // private _is_cooldown: boolean;
+    // private _blast_charge: number;
 
     constructor(id: string) {
         const canvas = document.getElementById(id) as HTMLCanvasElement;
         this._ctx = canvas.getContext("2d");
         this._canvas = canvas;
 
-        this._attract_charge = 25;
-        this._blast_charge = 0;
-        this._is_charging = false;
-        this._is_cooldown = false;
+        // this._attract_charge = 25;
+        // this._blast_charge = 0;
+        // this._is_charging = false;
+        // this._is_cooldown = false;
 
         this._max_nodes = 0;
         this._bounds = { lower: { x: 0, y: 0 }, upper: { x: 0, y: 0 } };
@@ -133,9 +133,9 @@ class NetworkAnimation {
         this._center.y = c.y;
     }
 
-    setCharging(c: boolean) {
-        this._is_charging = c;
-    }
+    // setCharging(c: boolean) {
+    //     this._is_charging = c;
+    // }
 
     spawn() {
         const canvas = this._canvas;
@@ -267,26 +267,6 @@ class NetworkAnimation {
 }
 
 const n = new NetworkAnimation("my-canvas");
-
-window.addEventListener("mousemove", (e) => {
-    n.updateCenter(e);
-});
-
-window.addEventListener("mouseenter", (e) => {
-    n.updateCenter(e);
-});
-
-window.addEventListener("mouseup", () => {
-    n.setCharging(false);
-});
-
-window.addEventListener("mousedown", () => {
-    n.setCharging(true);
-});
-
-window.addEventListener("mouseleave", () => {
-    n.updateCenter({ x: 0, y: 0 });
-});
 
 n.init();
 window.addEventListener("resize", () => n.init());
